@@ -1,24 +1,28 @@
 <template>
     <div>
     <h2>{{questionsAndAnswers[indexQuestion].question}}</h2>
-    <button>{{questionsAndAnswers[indexQuestion].answerA}}</button>
-    <button>{{questionsAndAnswers[indexQuestion].answerB}}</button>
-    <button>{{questionsAndAnswers[indexQuestion].answerC}}</button>
+    <button :disabled=isDisabled v-for="answer in questionsAndAnswers[indexQuestion].answer" :key="answer" @click="checkAnswer(answer)">
+    {{answer}}
+    </button>
     <br>
     <button @click="nextQuestion">Dalej</button>
     
-    <h3>Ilość poprawnych odpowiedzi: 0/6</h3>
+    
     </div>
 </template>
 <script>
 export default {
     props: [
         'questionsAndAnswers',
-        'indexQuestion'
+        'indexQuestion',
+        'isDisabled'
     ],
     methods: {
         nextQuestion(){
             this.$emit('nextQuestion');
+        },
+        checkAnswer(answer){
+            this.$emit('checkAnswer',answer);
         }
     }
 }

@@ -2,8 +2,8 @@
   <div id="app">
     <h1>QUIZ Z JĘZYKA ANGIELSKIEGO</h1>
     <button @click="startQuiz" v-if="!isQuizStarted">Zacznij quiz</button>
-    <Quiz v-if="isQuizStarted" :questionsAndAnswers=questionsAndAnswers :indexQuestion=indexQuestion @nextQuestion="nextQ"/>
-   
+    <Quiz v-if="isQuizStarted" :isDisabled=isDisabled :questionsAndAnswers=questionsAndAnswers :indexQuestion=indexQuestion @nextQuestion="nextQ" @checkAnswer="checkA"/>
+    <h3>Ilość poprawnych odpowiedzi: {{points}}/6</h3>
     
   </div>
 </template>
@@ -19,13 +19,15 @@ export default {
     return{
       isQuizStarted:false,
       indexQuestion:0,
+      points:0,
+      isDisabled:false,
       questionsAndAnswers:[
-        {id:1, question:'... sofa do you like better; the black or the white one?', answerA:'Which', answerB:'What', answerC:'Who'},
-        {id:2, question:'Are you enjoying ...?', answerA:'your', answerB:'yourselves', answerC:'you'},
-        {id:3, question:'What would you like to have for ... lunch today?', answerA:'a', answerB:'the', answerC:'-'},
-        {id:4, question:'Let ... do whatever I want.', answerA:'I', answerB:'me', answerC:'my'},
-        {id:5, question:'I ... France twice in my life.', answerA:'have been in', answerB:'have been to', answerC:'went to'},
-        {id:6, question:'If the police had not caught him, he ... in prison now.', answerA:'will not be', answerB:'would not have been', answerC:'would not be'},
+        {id:1, question:'... sofa do you like better; the black or the white one?', answer:['Which', 'What', 'Who']},
+        {id:2, question:'Are you enjoying ...?', answer:['your', 'yourselves', 'you']},
+        {id:3, question:'What would you like to have for ... lunch today?', answer:['a', 'the', '-']},
+        {id:4, question:'Let ... do whatever I want.', answer:['I', 'me', 'my']},
+        {id:5, question:'I ... France twice in my life.', answer:['have been in', 'have been to', 'went to']},
+        {id:6, question:'If the police had not caught him, he ... in prison now.', answer:['will not be', 'would not have been', 'would not be']},
       ],
       correctAnswers:['Which', 'yourselves', '-', 'me', 'have been to','would not be',]
     }
@@ -34,6 +36,7 @@ export default {
     startQuiz()
     {
       this.isQuizStarted=true
+      this.points=0
     },
     nextQ(){
       if(this.indexQuestion<5)
@@ -45,6 +48,15 @@ export default {
         this.isQuizStarted=false
         this.indexQuestion=0
       }
+      this.isDisabled=false
+      
+    },
+    checkA(answer){
+      if(answer==this.correctAnswers[this.indexQuestion])
+      {
+        this.points++
+      }
+      this.isDisabled=true
       
     }
   }
