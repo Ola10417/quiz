@@ -1,7 +1,8 @@
 <template>
     <div>
     <h2>{{questionsAndAnswers[indexQuestion].question}}</h2>
-    <button :disabled=isDisabled v-for="answer in questionsAndAnswers[indexQuestion].answer" :key="answer" @click="checkAnswer(answer)">
+    
+    <button :disabled=isDisabled v-for="answer in questionsAndAnswers[indexQuestion].answer" :key="answer" @click="checkAnswer(answer, questionsAndAnswers[indexQuestion].id)">
     {{answer}}
     </button>
     <br>
@@ -21,8 +22,8 @@ export default {
         nextQuestion(){
             this.$emit('nextQuestion');
         },
-        checkAnswer(answer){
-            this.$emit('checkAnswer',answer);
+        checkAnswer(answer, id){
+            this.$emit('checkAnswer',answer, id);
         }
     }
 }

@@ -1,9 +1,14 @@
 <template>
   <div id="app">
     <h1>QUIZ Z JĘZYKA ANGIELSKIEGO</h1>
-    <button @click="startQuiz" v-if="!isQuizStarted">Zacznij quiz</button>
-    <Quiz v-if="isQuizStarted" :isDisabled=isDisabled :questionsAndAnswers=questionsAndAnswers :indexQuestion=indexQuestion @nextQuestion="nextQ" @checkAnswer="checkA"/>
+    <div v-if="isQuizCompleted">
+      <h1>Wynik</h1>
     <h3>Ilość poprawnych odpowiedzi: {{points}}/6</h3>
+    </div>
+    <button @click="startQuiz" v-if="!isQuizStarted">{{buttonTitle}}</button>
+    
+    <Quiz v-if="isQuizStarted" :isDisabled=isDisabled :questionsAndAnswers=questionsAndAnswers :indexQuestion=indexQuestion @nextQuestion="nextQ" @checkAnswer="checkA"/>
+    
     
   </div>
 </template>
@@ -18,8 +23,10 @@ export default {
   data(){
     return{
       isQuizStarted:false,
+      isQuizCompleted:false,
       indexQuestion:0,
       points:0,
+      buttonTitle:'Rozpocznij quiz',
       isDisabled:false,
       questionsAndAnswers:[
         {id:1, question:'... sofa do you like better; the black or the white one?', answer:['Which', 'What', 'Who']},
@@ -33,32 +40,51 @@ export default {
     }
   },
   methods:{
+    shuffle() {
+      var currentIndex = this.questionsAndAnswers.length, temporaryValue, randomIndex;
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = this.questionsAndAnswers[currentIndex];
+        this.questionsAndAnswers[currentIndex] = this.questionsAndAnswers[randomIndex];
+        this.questionsAndAnswers[randomIndex] = temporaryValue;
+        }
+      },
     startQuiz()
     {
+      this.shuffle()
       this.isQuizStarted=true
       this.points=0
+      this.isQuizCompleted=false
+      this.buttonTitle='Rozpocznij quiz'
     },
     nextQ(){
-      if(this.indexQuestion<5)
+      if(this.indexQuestion<=5)
       {
         this.indexQuestion++
       }
-      if(this.indexQuestion==5)
+      if(this.indexQuestion==6)
       {
         this.isQuizStarted=false
         this.indexQuestion=0
+        this.isQuizCompleted=true
+        this.buttonTitle='Powtórz quiz'
       }
       this.isDisabled=false
       
     },
-    checkA(answer){
-      if(answer==this.correctAnswers[this.indexQuestion])
+    checkA(answer, id){
+      if(answer==this.correctAnswers[id-1])
       {
         this.points++
       }
       this.isDisabled=true
       
     }
+  },
+  computed:{
+    
+
   }
 }
 </script>
