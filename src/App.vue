@@ -35,8 +35,13 @@ export default {
         {id:4, question:'Let ... do whatever I want.', answer:['I', 'me', 'my']},
         {id:5, question:'I ... France twice in my life.', answer:['have been in', 'have been to', 'went to']},
         {id:6, question:'If the police had not caught him, he ... in prison now.', answer:['will not be', 'would not have been', 'would not be']},
+        {id:7, question:'We will be late ... we leave now.', answer:['provided', 'in case', 'unless']},
+        {id:8, question:'Let\'s go swimming, ...?', answer:['shall we', 'should we', 'let\'s not']},
+        {id:9, question:'I ... to think what will happen if the boss finds out.', answer:['care', 'resist', 'dread']},
+        {id:10, question:'I ... here for ten years in June next year.', answer:['will live', 'will be living', 'will have been living']},
+        {id:11, question:'How can you be so indifferent ... the suffering of others?', answer:['to', 'about', 'towrds']},
       ],
-      correctAnswers:['Which', 'yourselves', '-', 'me', 'have been to','would not be',]
+      correctAnswers:['Which', 'yourselves', '-', 'me', 'have been to','would not be', 'unless', 'shall we', 'dread', 'will have been living', 'to']
     }
   },
   methods:{

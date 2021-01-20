@@ -6,7 +6,7 @@
     {{answer}}
     </button>
     <br>
-    <button @click="nextQuestion">Dalej</button>
+    <button @click="nextQuestion" :disabled=!isDisabled>Dalej</button>
     
     
     </div>
@@ -23,7 +23,7 @@ export default {
             this.$emit('nextQuestion');
         },
         checkAnswer(answer, id){
-            this.$emit('checkAnswer',answer, id);
+            this.$emit('checkAnswer',answer,id);
         }
     }
 }
