@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <h1>QUIZ Z JĘZYKA ANGIELSKIEGO</h1>
-    <div v-if="isQuizCompleted">
+    <h1 class="mb-5" >QUIZ Z JĘZYKA ANGIELSKIEGO</h1>
+    <div v-if="isQuizCompleted" class="mb-4">
       <h1>Wynik</h1>
     <h3>Ilość poprawnych odpowiedzi: {{points}}/6</h3>
     </div>
-    <button @click="startQuiz" v-if="!isQuizStarted">{{buttonTitle}}</button>
+    <button class="btn btn-primary p-3" @click="startQuiz" v-if="!isQuizStarted">{{buttonTitle}}</button>
     
-    <Quiz v-if="isQuizStarted" :isDisabled=isDisabled :questionsAndAnswers=questionsAndAnswers :indexQuestion=indexQuestion @nextQuestion="nextQ" @checkAnswer="checkA"/>
+    <Quiz class="row w-50 mx-auto" v-if="isQuizStarted" :isDisabled=isDisabled :questionsAndAnswers=questionsAndAnswers :indexQuestion=indexQuestion @home="gohome" @checkAnswer="checkA"/>
     
     
   </div>
@@ -27,7 +27,6 @@ export default {
       indexQuestion:0,
       points:0,
       buttonTitle:'Rozpocznij quiz',
-      isDisabled:false,
       questionsAndAnswers:[
         {id:1, question:'... sofa do you like better; the black or the white one?', answer:['Which', 'What', 'Who']},
         {id:2, question:'Are you enjoying ...?', answer:['your', 'yourselves', 'you']},
@@ -39,7 +38,7 @@ export default {
         {id:8, question:'Let\'s go swimming, ...?', answer:['shall we', 'should we', 'let\'s not']},
         {id:9, question:'I ... to think what will happen if the boss finds out.', answer:['care', 'resist', 'dread']},
         {id:10, question:'I ... here for ten years in June next year.', answer:['will live', 'will be living', 'will have been living']},
-        {id:11, question:'How can you be so indifferent ... the suffering of others?', answer:['to', 'about', 'towrds']},
+        {id:11, question:'How can you be so indifferent ... the suffering of others?', answer:['to', 'about', 'towards']},
       ],
       correctAnswers:['Which', 'yourselves', '-', 'me', 'have been to','would not be', 'unless', 'shall we', 'dread', 'will have been living', 'to']
     }
@@ -54,6 +53,11 @@ export default {
         this.questionsAndAnswers[currentIndex] = this.questionsAndAnswers[randomIndex];
         this.questionsAndAnswers[randomIndex] = temporaryValue;
         }
+      },
+      gohome()
+      {
+        this.isQuizStarted=false
+        this.points=0
       },
     startQuiz()
     {
@@ -84,6 +88,7 @@ export default {
         this.points++
       }
       this.isDisabled=true
+      this.nextQ()
       
     }
   },
@@ -101,6 +106,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 70px;
 }
 </style>
